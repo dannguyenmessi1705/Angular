@@ -1,0 +1,19 @@
+<app-header />
+<main>
+  <ul id="users">
+    @for (user of users; track user.id) { <!-- @for(new) ngFor(old) -->
+      <!-- track user.id để theo dõi sự thay đổi của id, nếu không có track thì Angular sẽ không biết khi nào cần cập nhật lại danh sách -->
+      <!-- ngFor sẽ lặp qua từng phần tử trong mảng users và tạo ra một thẻ <li> cho mỗi phần tử -->
+      <li>
+        <app-user [user]="user" (select)="onSelectUser(user.id)" [selected]="user.id === selectedUserId"/>
+      </li>
+    }
+  </ul>
+  @if (selectedUser) { <!-- @if(new) ngIf(old) -->
+    <!-- ngIf sẽ kiểm tra xem selectedUser có giá trị hay không, nếu có thì sẽ hiển thị component tasks -->
+    <app-tasks [name]="selectedUser.name" [id]="selectedUser.id"/>
+  } @else { <!-- @else(new) ngElse(old) -->
+    <!-- ngElse sẽ hiển thị thông báo nếu không có người dùng nào được chọn -->
+    <p id="fallback">Select a user to see their tasks!</p>
+  }
+</main>
