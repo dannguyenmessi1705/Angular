@@ -7,7 +7,16 @@ import { type NewTaskModel } from "./newTasks.model";
   providedIn: "root",
 })
 export class TaskService {
-  private tasks = dummyTasks;
+  private tasks: TaskModel[] = [];
+
+  constructor() {
+    const taskJson = localStorage.getItem("tasks");
+    if (taskJson) {
+      this.tasks = JSON.parse(taskJson);
+    } else {
+      this.tasks = dummyTasks; // Initialize with dummy tasks if no tasks in localStorage
+    }
+  }
 
   selectedUserTasks(userId: string): TaskModel[] {
     return this.tasks.filter((task) => task.userId === userId);
@@ -15,6 +24,7 @@ export class TaskService {
 
   removeTask(taskId: string): void {
     this.tasks = this.tasks.filter((task) => task.id !== taskId);
+    this.saveTasks(); // Save tasks to localStorage after removing a task
   }
 
   addTask(newTask: NewTaskModel, userId: string): void {
@@ -26,5 +36,10 @@ export class TaskService {
       userId, // Assuming userId is part of NewTaskModel
     };
     this.tasks.unshift(task);
+    this.saveTasks(); // Save tasks to localStorage after adding a new task
+  }
+
+  private saveTasks(): void {
+    localStorage.setItem("tasks", JSON.stringify(this.tasks));
   }
 }
