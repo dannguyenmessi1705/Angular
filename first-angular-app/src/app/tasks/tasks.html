@@ -9,7 +9,7 @@
     </menu>
   </header>
   <ul>
-    @for (task of selectedUserTasks(); track task.id) { <!-- @for(new) ngFor(old) -->
+    @for (task of selectedUserTasks; track task.id) { <!-- @for(new) ngFor(old) -->
       <!-- track task.id để theo dõi sự thay đổi của id, nếu không có track thì Angular sẽ không biết khi nào cần cập nhật lại danh sách -->
       <!-- ngFor sẽ lặp qua từng phần tử trong mảng tasks và tạo ra một thẻ <li> cho mỗi phần tử -->
       <li>
