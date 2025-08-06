@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Output, signal } from "@angular/core";
+import { Component, EventEmitter, Input, Output, signal } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { NewTaskModel } from "../newTasks.model";
+import { TaskService } from "../tasks.service";
 
 @Component({
   selector: "app-new-task",
@@ -9,22 +10,28 @@ import { NewTaskModel } from "../newTasks.model";
   styleUrl: "./new-task.css",
 })
 export class NewTask {
-  @Output() cancel = new EventEmitter<void>();
-  @Output() submit = new EventEmitter<NewTaskModel>();
+  constructor(private taskService: TaskService) {}
+
+  @Output() close = new EventEmitter<void>();
+  @Input() userId!: string; // Nhận userId từ component cha để thêm task cho người dùng cụ thể
 
   enteredTitle = signal<string>("");
   enteredSummary = signal<string>("");
   enteredDueDate = signal<string>("");
 
   onCancel() {
-    this.cancel.emit();
+    this.close.emit();
   }
   onSubmit() {
-    this.submit.emit({
-      title: this.enteredTitle(),
-      summary: this.enteredSummary(),
-      date: this.enteredDueDate(),
-    });
+    this.taskService.addTask(
+      {
+        title: this.enteredTitle(),
+        summary: this.enteredSummary(),
+        date: this.enteredDueDate(),
+      },
+      this.userId
+    );
+    this.close.emit(); // Phát ra sự kiện cancel để thông báo component cha rằng việc thêm task đã hoàn thành
   }
 }
 
