@@ -9,13 +9,14 @@ import {
   signal,
 } from "@angular/core";
 import { type UserModel } from "./user.model";
+import { Card } from "../shared/card/card";
 // import { DUMMY_USERS } from "../dummy-user";
 
 // const randomIndex = Math.floor(Math.random() * DUMMY_USERS.length);
 
 @Component({
   selector: "app-user",
-  imports: [],
+  imports: [Card],
   templateUrl: "./user.html",
   styleUrl: "./user.css",
 })
