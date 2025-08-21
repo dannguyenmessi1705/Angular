@@ -1,4 +1,6 @@
 import {
+  afterNextRender,
+  afterRender,
   Component,
   contentChild,
   ContentChild,
@@ -22,6 +24,16 @@ export class ControlComponent {
   @ContentChild("content") private control?: ElementRef<
     HTMLInputElement | HTMLTextAreaElement
   >;
+
+  constructor() {
+    afterRender(() => {
+      console.log("after render");
+    });
+
+    afterNextRender(() => {
+      console.log("after next render");
+    });
+  }
 
   private control2 =
     contentChild<ElementRef<HTMLInputElement | HTMLTextAreaElement>>("content");
