@@ -15,9 +15,6 @@ import {
   templateUrl: "./control.component.html",
   styleUrl: "./control.component.css",
   encapsulation: ViewEncapsulation.None,
-  host: {
-    click: "onClick()",
-  },
 })
 export class ControlComponent {
   title = input.required<string>();
