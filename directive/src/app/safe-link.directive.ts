@@ -1,4 +1,4 @@
-import { Directive } from "@angular/core";
+import { Directive, input } from "@angular/core";
 
 @Directive({
   selector: "a[appSafeLink]",
@@ -8,6 +8,7 @@ import { Directive } from "@angular/core";
   },
 })
 export class SafeLinkDirective {
+  queryParam = input("", { alias: "appSafeLink" }); // Tạo input với giá trị mặc định là "" và có attribute chính là "appSafeLink" để trong template có thể sử dụng luôn bằng cách <tên directive> = "<giá trị>"
   constructor() {
     console.log("SafeLinkDirective initialized");
   }
@@ -15,7 +16,13 @@ export class SafeLinkDirective {
   confirmToLeave(event: MouseEvent) {
     const isConfirm = window.confirm("Do you want to leave this page?"); // Hiển thị hộp thoại xác nhận
 
-    if (isConfirm) return; // Người dùng xác nhận, cho phép chuyển hướng
+    if (isConfirm) {
+      const address = (event.target as HTMLAnchorElement).href; // Lấy địa chỉ liên kết mà người dùng muốn truy cập khi nhấp vào
+      (event.target as HTMLAnchorElement).href =
+        address + "?form=" + this.queryParam(); // Thêm tham số truy vấn vào địa chỉ liên kết
+
+      return;
+    } // Người dùng xác nhận, cho phép chuyển hướng
 
     event.preventDefault(); // Ngăn chặn chuyển hướng
   }
