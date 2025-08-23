@@ -5,7 +5,7 @@
 
   <app-auth />
 
-  @if (isAdmin()) {
+  <ng-template appAuth="admin"> <!-- <ng-template> là thẻ chỉ có trong Angular, nó cho phép định nghĩa một phần tử DOM mà chỉ được hiển thị khi điều kiện cho trước là đúng. -->
     <p>Only admins should see this!</p>
-  }
+  </ng-template>
 </main>
