@@ -1,10 +1,18 @@
 import { Component } from "@angular/core";
 import {
+  AbstractControl,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from "@angular/forms";
+
+function mustContainQuestionMark(control: AbstractControl) {
+  if (control.value.includes("?")) {
+    return null; // Valid
+  }
+  return { notContainQuestionMark: true }; // Invalid
+}
 
 @Component({
   selector: "app-login",
