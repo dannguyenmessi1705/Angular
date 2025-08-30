@@ -4,6 +4,7 @@ import { NoTaskComponent } from "./tasks/no-task/no-task.component";
 import { UserTasksComponent } from "./users/user-tasks/user-tasks.component";
 import { NewTaskComponent } from "./tasks/new-task/new-task.component";
 import { TasksComponent } from "./tasks/tasks.component";
+import { NotFoundComponent } from "./not-found/not-found.component";
 
 export const routes: Routes = [
   {
@@ -14,6 +15,11 @@ export const routes: Routes = [
     path: "users/:userId",
     component: UserTasksComponent,
     children: [
+      {
+        path: "", // <domain>/users/:userId
+        redirectTo: "tasks", // Chuyển hướng đến <domain>/users/:userId/tasks
+        pathMatch: "prefix", // So khớp với phần đầu của URL
+      },
       {
         path: "tasks", // <domain>/tasks
         component: TasksComponent,
@@ -26,6 +32,6 @@ export const routes: Routes = [
   },
   {
     path: "**", // <domain>/anything-else
-    component: NoTaskComponent,
+    component: NotFoundComponent,
   },
 ];

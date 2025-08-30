@@ -14,7 +14,14 @@ import { TasksService } from "./tasks.service";
 export class TasksComponent {
   private taskService = inject(TasksService);
   userId = input.required<string>();
+  order = input.required<"asc" | "desc">();
   userTasks = computed(() =>
-    this.taskService.allTasks().filter((t) => t.userId === this.userId())
+    this.taskService.allTasks().filter((t) => t.userId === this.userId()).sort((a, b) => {
+      if (this.order() === "asc") {
+        return a.title.localeCompare(b.title);
+      } else {
+        return b.title.localeCompare(a.title);
+      }
+    })
   );
 }

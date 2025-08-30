@@ -24,6 +24,19 @@ export class UserTasksComponent implements OnInit {
   //   () => this.userService.users.find((u) => u.id === this.userId()?.name
   // );
 
+  order = input.required<"asc" | "desc">();
+
+  // order: "asc" | "desc" = "asc";
+  // ngOnInit(): void {
+  //   console.log(this.activatedRoute);
+  //   const sub = this.activatedRoute.params.subscribe({
+  //     next: (params) => {
+  //       this.username = params["order"];
+  //     },
+  //   });
+  //   this.destroyRef.onDestroy(() => sub.unsubscribe());
+  // }
+
   username: string = "";
   private destroyRef = inject(DestroyRef);
   private activatedRoute = inject(ActivatedRoute);
