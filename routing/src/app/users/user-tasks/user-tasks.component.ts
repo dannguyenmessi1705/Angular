@@ -8,7 +8,14 @@ import {
   OnInit,
 } from "@angular/core";
 import { UsersService } from "../users.service";
-import { ActivatedRoute, RouterLink, RouterOutlet } from "@angular/router";
+import {
+  ActivatedRoute,
+  ActivatedRouteSnapshot,
+  ResolveFn,
+  RouterLink,
+  RouterOutlet,
+  RouterStateSnapshot,
+} from "@angular/router";
 
 @Component({
   selector: "app-user-tasks",
@@ -52,4 +59,18 @@ export class UserTasksComponent implements OnInit {
     });
     this.destroyRef.onDestroy(() => sub.unsubscribe());
   }
+
+  title = input.required<string>();
+  userNameRes = input.required<string>();
 }
+
+export const userNameResolver: ResolveFn<string> = (
+  route: ActivatedRouteSnapshot,
+  state: RouterStateSnapshot
+) => {
+  const userService = inject(UsersService);
+  return (
+    userService.users.find((u) => u.id === route.paramMap.get("userId"))
+      ?.name ?? ""
+  );
+};
