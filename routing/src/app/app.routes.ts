@@ -1,7 +1,10 @@
 import { Routes } from "@angular/router";
 import { TaskComponent } from "./tasks/task/task.component";
 import { NoTaskComponent } from "./tasks/no-task/no-task.component";
-import { userNameResolver, UserTasksComponent } from "./users/user-tasks/user-tasks.component";
+import {
+  userNameResolver,
+  UserTasksComponent,
+} from "./users/user-tasks/user-tasks.component";
 import { NewTaskComponent } from "./tasks/new-task/new-task.component";
 import { TasksComponent } from "./tasks/tasks.component";
 import { NotFoundComponent } from "./not-found/not-found.component";
@@ -18,6 +21,7 @@ export const routes: Routes = [
     resolve: {
       userNameRes: userNameResolver,
     },
+    runGuardsAndResolvers: "always",
     children: [
       {
         path: "", // <domain>/users/:userId
