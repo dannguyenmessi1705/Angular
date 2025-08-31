@@ -74,3 +74,10 @@ export const userNameResolver: ResolveFn<string> = (
       ?.name ?? ""
   );
 };
+
+export const titleResolver: ResolveFn<string> = (
+  route: ActivatedRouteSnapshot,
+  state: RouterStateSnapshot
+) => {
+  return userNameResolver(route, state) + "'s Tasks";
+};
